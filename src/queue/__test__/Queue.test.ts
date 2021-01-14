@@ -29,7 +29,12 @@ describe("Queue", () => {
   });
 
   it('should be possible to enqueue/dequeue objects', () => {
-    const queue = new Queue();
+    type QueueType = {
+      value: string,
+      key: string
+    }
+
+    const queue: Queue<QueueType> = new Queue();
 
     queue.enqueue({ value: 'test1', key: 'key1' });
     queue.enqueue({ value: 'test2', key: 'key2' });
@@ -37,8 +42,8 @@ describe("Queue", () => {
     const stringifier = (value: any) => `${value.key}:${value.value}`;
 
     expect(queue.toString(stringifier)).toBe('key1:test1,key2:test2');
-    expect(queue.dequeue().value).toBe('test1');
-    expect(queue.dequeue().value).toBe('test2');
+    expect(queue.dequeue()?.value).toBe('test1');
+    expect(queue.dequeue()?.value).toBe('test2');
     expect(queue.dequeue()?.value).toBeNull;
   });
 
